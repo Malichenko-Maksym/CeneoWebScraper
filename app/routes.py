@@ -35,27 +35,26 @@ def index():
 
 @app.route('/extract/<product_id>')
 def extract(product_id):
-    #url= "https://www.ceneo.pl/"+source+"#tab=reviews"
-    url= "https://www.ceneo.pl/121434057#tag=nph_row_promotion"
+    url = f"https://www.ceneo.pl/{product_id}#tab=reviews"
     all_opinions = []
     while(url):
-        response=requests.get(url)
+        print(url)
+        response = requests.get(url)
         page = BeautifulSoup(response.text, "html.parser")
         opinions = page.select("div.js_product-review")
+        for opinion in opinions:
+            single_opinion = {
+                key:get_item(opinion, *value)
+                    for key, value in selectors.items()
+            }
+            single_opinion["opinion_id"] = opinion["data-entry-id"]
+            all_opinions.append(single_opinion)
+        try:
+            url = "https://www.ceneo.pl"+page.select_one("a.pagination__next")["href"]
+        except TypeError:
+            url = None
 
-    for opinion in opinions:
-        single_opinion = {
-            key: get_item(opinion, *value)
-                for key, value in selectors.items()
-        }
-        single_opinion["opinion_id"] = opinion["data-entry-id"]
-        all_opinions.append(single_opinion)
-    try:
-        url = "https://www.ceneo.pl"+page.select_one("a.pagination__next")["href"]
-    except TypeError:
-        url = None
-    file_attributes="opinions/"+source+".json"
-    with open(f"app/opinions/{product_id}.json", "w", encoding="UTF-8") as  jf:
+    with open(f"app/opinions/{product_id}.json", "w", encoding="UTF-8") as jf:
         json.dump(all_opinions, jf, indent=4, ensure_ascii=False)
     return redirect(url_for('product', product_id=product_id))
 
@@ -69,5 +68,4 @@ def author():
 
 @app.route('/product/<product_id>')
 def product(product_id):
-    return render_template("product.html.jinja",product_id=product_id)
-
+    return render_template("product.html.jinja", product_id=product_id)
