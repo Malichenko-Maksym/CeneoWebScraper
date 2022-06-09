@@ -4,9 +4,8 @@
     <h1>Produkty:</h1>
     {% for product in products %}
          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a class="nav-link" href="{{url_for('extract')}}"><i class="bi bi-door-open-fill">
-            </i>{{product}}</a>
-            <span class="badge bg-primary rounded-pill">2</span>
+                <a class="nav-link" href="{{url_for('product', product_id=product)}}"><i class="bi bi-door-open-fill"></i>{{product}}</a>
+                <span class="badge bg-secondary rounded-pill">{{loop.index}}</span>
         </li>
     {% endfor%}
 </ul>
