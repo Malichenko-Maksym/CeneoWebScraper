@@ -1,32 +1,30 @@
-class Opinion():
-    def __init__(self, opinion):
-        self.selectors = {
-        "author": ["span.user-post__author-name"],
-        "recommendation": ["span.user-post__author-recomendation > em"],
-        "stars": ["span.user-post__score-count"],
-        "content": ["div.user-post__text"],
-        "useful": ["button.vote-yes > span"],
-        "useless": ["button.vote-no > span"],
-        "published": ["span.user-post__published > time:nth-child(1)", "datetime"],
-        "purchased": ["span.user-post__published > time:nth-child(2)", "datetime"],
-        "pros": ["div[class$=positives] ~ div.review-feature__item", None, True],
-        "cons": ["div[class$=negatives] ~ div.review-feature__item", None, True]
-        }
-
-        self.single_opinion = {
-                    key:Opinion.get_item(opinion, *value)
-                        for key, value in self.selectors.items()
-                }
-        self.single_opinion["opinion_id"] = opinion["data-entry-id"]
-        
-    def get_item(ancestor, selector, attribute=None, return_list=False):
-        try:
-            if return_list:
-                return [item.get_text().strip() for item in ancestor.select(selector)]
-            if attribute:
-                return ancestor.select_one(selector)[attribute]
-            return ancestor.select_one(selector).get_text().strip()
-        except (AttributeError, TypeError):
-            return None
-
+from app.parameters import selectorts
+from app.utils import get_item
+class Opinion:
+    def __init__(self, author="", recommendation=None, stars=0, content="", useful=0, useless=0, publish_date=None, purchase_date=None, pros=[], cons=[], opinion_id=""):
+        self.author = author
+        self.recommendation = recommendation
+        self.stars = stars
+        self.content = content
+        self.useful = useful
+        self.useless = useless
+        self.publish_date = publish_date
+        self.purchase_date = purchase_date
+        self.pros = pros
+        self.cons = cons
+        self.opinion_id = opinion_id
+        return self
+    def extract_opinion(self, opinion):
+        for key, value in selectors.items():
+            setattr(self, key, get_item(opinion, *value))
+        self.opinion_id = opinion["data-entry-id"]             
+        return self
     
+    def __str__(self):
+        pass
+
+    def __repr__(self):
+        pass
+
+    def to_dict(self):
+        pass
