@@ -1,12 +1,8 @@
 from app import app
-from app.models.product import Product
-from app.models.opinion import Opinion
 from flask import render_template, redirect, url_for, request
 import json
-
-
-
-
+import os
+from app.models.product import Product
 
 @app.route('/')
 def index():
@@ -23,7 +19,6 @@ def extract():
         else:
             pass
 
-        
         return redirect(url_for('product', product_id=product_id))
     else:
         return render_template("extract.html.jinja")
@@ -40,6 +35,3 @@ def author():
 @app.route('/product/<product_id>')
 def product(product_id):
     return render_template("product.html.jinja", product_id=product_id, stats=stats, opinions=opinions)
-    
-    
-
