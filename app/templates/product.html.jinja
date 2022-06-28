@@ -1,4 +1,108 @@
 {% extends "base.html.jinja" %}
 {% block content%}
-    <p>{{product_id}}</p>
+    <h1 style="text-align:center, align:center">{{product_name}}</h1>
+    <div style="align:center">
+    <h3 style="text-align:center, align:center"> <a style="text-align:center, align:center" href="https://www.ceneo.pl/{{product_id}}">Strona produktu</a> </h3>
+    </div>
+    <a href="app/opinions/{{product_id}}.json" download>Download link</a>
+    
+     <div class="chart-container" style="position: relative; height:30vh; width:30vw">
+  <canvas id="mypieChart"></canvas>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <div class="chart-container" style="position: relative; height:30vh; width:40vw">
+  <canvas id="bar-chart"></canvas>
+    </div>
+
+    <script>
+  const data = {
+  labels: [
+    'Polecam',
+    'Nie polecam',
+    'Nie mam zdania'
+  ],
+  datasets: [{
+    label: 'Polecam/Nie polecam',
+    data: {{data | safe}},
+    backgroundColor: [
+      'rgb(143, 241, 53)',
+      'rgb(253, 45, 53)',
+      'rgb(54, 162, 235)'
+    ],
+    hoverOffset: 4
+  }]
+};
+</script>
+<script>
+  const config = {
+  type: 'pie',
+  data: data,
+  options: {
+        responsive: true,
+        plugins: {
+            title: {
+              text: "Recommendations",
+              display: true
+            }
+        },
+  }
+};
+ const myChart = new Chart(document.getElementById('mypieChart'), config);
+</script>
+    
+<script>
+const configuration = {
+  type: 'bar',
+  data: {
+  labels: ["0", "0.5", "1", "1.5", "2", "2.5","3","3.5","4","4.5","5"],
+  datasets: [{
+    label: 'Stars',
+    data: {{stars | safe}},
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+},
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Number of opinions"
+          }
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Number of stars"
+          }
+      }
+    }
+  },
+};
+
+const myNewChart = new Chart(document.getElementById('bar-chart'), configuration);
+</script>
+
+<br><br><br><br>
+<hr>
 {% endblock content %}

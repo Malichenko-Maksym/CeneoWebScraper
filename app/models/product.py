@@ -53,31 +53,39 @@ class Product():
         self.average_score = opinions["stars"].mean().round(2)
         return self
     
-    def draw_charts(self):
+    def get_stars(self):
         opinions = self.opinions_to_df()
-        if not os.path.exists("app/static/plots"):
-            os.makedirs("app/static/plots")
-        recommendation = opinions["recommendation"].value_counts(dropna=False).sort_index().reindex(["Nie polecam", "Polecam", None], fill_value=0)
-        recommendation.plot.pie(
-            label="",
-            autopct = lambda p: '{:.1f}%'.format(round(p)) if p > 0 else '',
-            colors = ["crimson", "forestgreen", "lightskyblue"],
-            labels = ["Nie polecam", "Polecam", "Nie mam zdania"]
-        )
-        plt.title("Rekomendacje")
-        plt.savefig(f"app/static/plots/{self.product_id}_recommendations.png")
-        plt.close()
-        stars = opinions["stars"].value_counts().sort_index().reindex(list(np.arange(0,5.5,0.5)), fill_value=0)
-        stars.plot.bar(
-            color = "pink"
-        )
-        plt.title("Oceny produktu")
-        plt.xlabel("Liczba gwiazdek")
-        plt.ylabel("Liczba opinii")
-        plt.grid(True, axis="y")
-        plt.xticks(rotation=0)
-        plt.savefig(f"app/static/plots/{self.product_id}_stars.png")
-        plt.close()
+        result = opinions["stars"].value_counts().sort_index().reindex(list(np.arange(0,5.5,0.5)), fill_value=0).values.tolist()
+        return [x//2 for x in result]
+
+    def draw_charts(self):
+        try:
+            opinions = self.opinions_to_df()
+            if not os.path.exists("app/static/plots"):
+                os.makedirs("app/static/plots")
+            recommendation = opinions["recommendation"].value_counts(dropna=False).sort_index().reindex(["Nie polecam", "Polecam", None], fill_value=0)
+            recommendation.plot.pie(
+                label="",
+                autopct = lambda p: '{:.1f}%'.format(round(p)) if p > 0 else '',
+                colors = ["crimson", "forestgreen", "lightskyblue"],
+                labels = ["Nie polecam", "Polecam", "Nie mam zdania"]
+            )
+            plt.title("Rekomendacje")
+            plt.savefig(f"app/static/plots/{self.product_id}_recommendations.png")
+            plt.close()
+            stars = opinions["stars"].value_counts().sort_index().reindex(list(np.arange(0,5.5,0.5)), fill_value=0)
+            stars.plot.bar(
+                color = "pink"
+            )
+            plt.title("Oceny produktu")
+            plt.xlabel("Liczba gwiazdek")
+            plt.ylabel("Liczba opinii")
+            plt.grid(True, axis="y")
+            plt.xticks(rotation=0)
+            plt.savefig(f"app/static/plots/{self.product_id}_stars.png")
+            plt.close()
+        except:
+            pass
         return self
 
     def __str__(self) -> str:

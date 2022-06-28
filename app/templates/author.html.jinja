@@ -1,4 +1,53 @@
 {% extends "base.html.jinja" %}
 {% block content%}
-    <p>Maksym Malichenko</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='autor_css.css') }}">
+    <div style = "position:relative; left:190px">
+<img src="static/Ja.png"  >
+<h2 >Malichenko Maksym</h2>
+<h3 style = "position:relative; left:110px">O sobie</h3>
+</div>
+<table  class="table1" width="90%" style = "position:relative; right:195px">
+ 
+  <tr>
+    <td width="21%" class="a">Kierunek Studiów: </td>
+    
+    <td class="a1"> Informatyka Stosowana I Stopnia na Uniwersytecie Ekonomicznym W Krakowie</td>
+  </tr>
+  <tr >
+    <td class="a">Dlaczego właśnie ten kierunek:</td>
+    
+    <td class="a1">Wybrałem ten kierunek, dlatego że zawsze ciekawiłem się komputerami oraz działaniem gospodarki. <br>
+      A kiedy w 13 lat po raz pierwszy spróbowałam programować, zrozumiałem że chcę zajmować się tym zawodowo. <br>
+      Oprócz tego bardzo chciałbym tworzyć aplikacje biznesowe, <br> a do tego jest bardzo przydatna wiedza ekonomiczna oraz organizacyjna. <br>
+      Biorąc to pod uwagę, informatyka na UEK jest idealnym wyborem, ponieważ dostarcza wszystką niezbędną wiedzę, <br> dla wykonywania przyszłej pracy zawodowej.</td>
+  </tr>
+<tr>
+    <td class="a">Oczekiwania:</td>
+    
+    <td class="a1">Chciałbym się nauczyć pracować w zespole,  poznać nowych ludzi <br> (przede wszystkim przyszłych oraz teraźniejszych programistów), <br>
+      ulepszyć swoje nawyki programowania oraz dowiedzieć się więcej na temat ekonomii i zarządzania.</td>
+  </tr>
+<tr>
+    <td class="a">Dotychczasowe osiągnięcia:</td>
+   
+    <td class="a1">Różny poziom znajomości trzech języków programowania.</td>
+  </tr>
+<tr>
+    <td class="a">Plany zawodowe:</td>
+   
+    <td class="a1">Jak już napisałem powyżej, chciałbym pracować w wielkich zespołach przy tworzeniu aplikacji biznesowych.  <br>
+      Mimo tego, jestem gotów spróbować siebie w różnych dziedzinach, połączonych z IT. </td>
+  </tr>
+
+<tr>
+    <td class="a">Hobby:</td>
+    
+    <td class="a1">Jazda na rowerze, nawiązywanie nowych znajomości, różnego typu wycieczki, <br> historia oraz niektóre gatunki literatury współczesnej.</td>
+  </tr>
+
+</table>
+
+
+<br><br><br><br>
+<hr>
 {% endblock content %}

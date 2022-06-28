@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, request
 import json
 import os
 from app.models.product import Product
+import re
 
 @app.route('/')
 def index():
@@ -12,6 +13,15 @@ def index():
 def extract():
     if request.method == "POST":
         product_id = request.form.get("product_id")
+        if  bool(re.search(r'\D', product_id)):
+            error = "Indeks może zawierać tylko cyfry"
+            return render_template("extract.html.jinja", error=error)
+        if len(product_id)<5:
+            error = "Indeks musi być dłuższy"
+            return render_template("extract.html.jinja", error=error)
+        if len(product_id)>20:
+            error = "Indeks musi być krótszy"
+            return render_template("extract.html.jinja", error=error)
         product = Product(product_id)
         product.extract_name()
         if product.product_name:
@@ -22,6 +32,7 @@ def extract():
             error = "Ups... coś poszło nie tak"
             return render_template("extract.html.jinja", error=error)
         return redirect(url_for('product', product_id=product_id))
+        
     else:
         return render_template("extract.html.jinja")
 
@@ -40,4 +51,7 @@ def product(product_id):
     product.import_product()
     stats = product.stats_to_dict()
     opinions = product.opinions_to_df()
-    return render_template("product.html.jinja", product_id=product_id, stats=stats, opinions=opinions)
+    stars =  product.get_stars()
+    data = [stats["pros_count"], stats["cons_count"], stats["opinions_count"]-stats["pros_count"]-stats["cons_count"]]
+    product_name = stats["product_name"]
+    return render_template("product.html.jinja", product_id=product_id, product_name=product_name, opinions=opinions, data=data, stars=stars)

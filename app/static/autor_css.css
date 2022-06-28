@@ -1,0 +1,60 @@
+h2{
+  
+  color: rgb(0, 0, 255);
+  font-size: 30px; 
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+h3{
+  
+  font-family: "Lucida Handwriting", "Courier New", monospace;
+  font-size: 17px;
+  color: #860000d7 ;}
+
+
+
+
+
+.table1, th, td {
+  border: 1px solid #1e1e7b;
+padding: 1px;
+background-color: rgba(242, 245, 200, 0.884); 
+max-width: 670px;
+margin: auto;
+align-self: left;
+
+}
+
+div {
+        
+font-size: 15px;
+}
+
+td{font-size: 10px;
+ color: #1b1b00;
+ font-weight: bold;
+ 
+}
+.a{ 
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Monaco", "Courier New", monospace;
+  color: #248f24;
+
+}
+
+.b{ background-color: #ccffff;
+  border: 0px; 
+  table-layout: fixed;
+  font-size: 13px;
+  
+  font-weight: bold;
+  font-family: "Monaco", "Courier New", monospace;
+}
+.a1{  font-family: "Yu Gothic", CSS  ;
+ color: #161661;
+ font-size: 12px;
+}
+
+
+
