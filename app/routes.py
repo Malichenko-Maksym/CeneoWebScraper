@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, send_file
 import json
 import os
 from app.models.product import Product
@@ -55,3 +55,9 @@ def product(product_id):
     data = [stats["pros_count"], stats["cons_count"], stats["opinions_count"]-stats["pros_count"]-stats["cons_count"]]
     product_name = stats["product_name"]
     return render_template("product.html.jinja", product_id=product_id, product_name=product_name, opinions=opinions, data=data, stars=stars)
+
+@app.route('/download/<product_id>')
+def download(product_id):
+    path = 'opinions\\'+str(product_id)+'.json'
+    return send_file(path, as_attachment=True)
+    

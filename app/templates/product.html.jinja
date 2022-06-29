@@ -4,8 +4,8 @@
     <div style="align:center">
     <h3 style="text-align:center, align:center"> <a style="text-align:center, align:center" href="https://www.ceneo.pl/{{product_id}}">Strona produktu</a> </h3>
     </div>
-    <a href="app/opinions/{{product_id}}.json" download>Download link</a>
     
+    <h1><a class="nav-link" href="{{url_for('download',product_id=product_id)}}"><i class="bi bi-filetype-json bi-8x"></i></a></h1>
      <div class="chart-container" style="position: relative; height:30vh; width:30vw">
   <canvas id="mypieChart"></canvas>
     </div>
